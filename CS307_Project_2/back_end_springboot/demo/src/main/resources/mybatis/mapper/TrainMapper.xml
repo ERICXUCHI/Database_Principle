@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="databaseProject.demo.mapper.TrainMapper">
+
+    <cache/>
+
+    <select id="deleteTrain" resultType="java.lang.String">
+        select * from del_train(#{train_num}, #{date})
+    </select>
+
+    <select id="getTrainByStationsAndDate" resultType="databaseProject.demo.pojo.Train" useCache="false">
+       select * from search_tickets_by_station_date_final(#{depart_station}, #{arr_station}, #{depart_date, jdbcType=DATE});
+   </select>
+
+    <select id="getTrainByNumAndDate" resultType="databaseProject.demo.pojo.Train" useCache="false">
+    select * from search_train_by_num(#{train_num}, #{depart_date})
+    </select>
+
+    <select id="addTrain" resultType="java.lang.String">
+        select * from add_train(#{add_train_num}, #{add_dpt_date},
+        #{add_station_name},#{add_arr_time},#{add_dpt_time},#{add_arr_day},#{add_entrance},
+        #{add_interval_km},#{add_first_price} ,#{add_first_remain},#{add_second_price},#{add_second_remain});
+    </select>
+
+
+</mapper>

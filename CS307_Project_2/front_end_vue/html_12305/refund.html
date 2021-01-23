@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--arrbuy = query-->
+<head>
+    <meta charset="UTF-8">
+    <title>退票</title>
+    <link href="../images/icon.ico" rel="icon" type="image/x-icon"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link href="../images/icon.ico" rel="icon" type="image/x-icon"/>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../library/citySelect/css/city-select.css">
+
+    <script src="../library/laydate/laydate.js"></script>
+
+    <style>
+        body{
+            background-image:url("../images/BGG.jpg");
+            background-size: cover;
+        }
+
+
+    </style>
+</head>
+<style>
+    .navigation_bar{
+        background: orange;
+    }
+
+    .navigation_text{
+        font-size: 20px;
+    }
+
+</style>
+<body>
+
+<a href="UserOrderQuery.html">
+    <img style="max-height:106px;overflow:hidden;" src="../images/logo.jpg" alt="">
+</a>
+<div id="app">
+
+    <div style="height: 20px">
+    </div>
+    <input type="button"  style="font-family: '方正柳公权楷书 简';font-size: 30px" value="退 票" @click="refund">
+    <input type="text" style="font-size: 24px" v-model="inputValue" @keypress.enter="refund">
+    <input type="button" style="font-family: '方正柳公权楷书 简';font-size: 30px" value="删 除" @click="clear">
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+
+    var app = new Vue({
+        el:"#app",
+        data:{
+            address:"http://192.168.43.13:2727/",
+            inputValue:"",
+        },
+        methods:{
+
+            refund:function () {
+                axios.get(this.address+"refundTicketById?"+"refund_ticket_id="+this.inputValue)
+                .then(function (response) {
+                    console.log(response);
+                    alert(response.data)
+                })
+            },
+            clear:function () {
+                this.inputValue = ""
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

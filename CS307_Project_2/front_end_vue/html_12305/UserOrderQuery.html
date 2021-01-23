@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--arrbuy = query-->
+<head>
+    <meta charset="UTF-8">
+    <title>订单查询</title>
+    <link href="../images/icon.ico" rel="icon" type="image/x-icon"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link href="../images/icon.ico" rel="icon" type="image/x-icon"/>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../library/citySelect/css/city-select.css">
+
+    <script src="../library/laydate/laydate.js"></script>
+
+    <style>
+        body{
+            background-image:url("../images/BGG.jpg");
+            background-size: cover;
+        }
+
+
+    </style>
+</head>
+<style>
+    .navigation_bar{
+        background: orange;
+    }
+
+    .navigation_text{
+        font-size: 20px;
+    }
+
+</style>
+<body>
+
+<a href="Login.html">
+    <img style="max-height:106px;overflow:hidden;" src="../images/logo.jpg" alt="">
+</a>
+    <div id="app">
+        <ul class="nav nav-pills nav-justified">
+            <li class="navigation_bar">
+                <a class="navigation_text" href="UserQuery.html" style="color: white;font-family: '方正字迹-龙吟体 简'">车票查询</a>
+            </li>
+            <li class="navigation_bar">
+                <a class="navigation_text" href="UserTrainQuery.html" style="color: white;font-family: '方正字迹-龙吟体 简'">车次查询</a>
+            </li>
+            <li class="navigation_bar">
+                <a class="navigation_text" href="UserBuy.html" style="color: white;font-family: '方正字迹-龙吟体 简'">购票服务</a>
+            </li>
+            <li class="active">
+                <a class="navigation_text" href="UserOrderQuery.html" style="color: white;font-family: '方正字迹-龙吟体 简'">订单查询</a>
+            </li>
+        </ul>
+
+        <div style="height: 20px">
+        </div>
+        <div style="font-family: '方正字迹-龙吟体 简';font-size: 20px">
+            输入需要查询的订单，请键入身份证号：
+        </div>
+        <div style="height: 10px"></div>
+        <input type="button"  style="font-family: '方正柳公权楷书 简';font-size: 30px" value="查 询" @click="getMes">
+        <input type="text" style="font-size: 24px" v-model="inputValue" @keypress.enter="getMes">
+        <input type="button" style="font-family: '方正柳公权楷书 简';font-size: 30px" value="删 除" @click="clear">
+
+        <div v-for="item in arrRes">
+            <div style="height: 50px;width:2000px;background: white;display: table-cell;vertical-align: middle;font-size: 20px;">
+                <table>
+                    <th style="width: 50px;position: relative ;left: 20px; font-family: 黑体" >
+                        <p>{{item.ticket_id}}</p>
+                    </th>
+                    <th style="width: 95px;position: relative ;left: 40px; font-family: 黑体" >
+                        <p>{{item.depart_train_station}}</p>
+                    </th>
+                    <th style="width: 95px;position: relative ;left: 40px; font-family: 黑体" >
+                        <p>{{item.destination_train_station}}</p>
+                    </th>
+                    <th style="width: 190px;position: relative ;left: 40px; font-family: 黑体" >
+                        <p>{{item.id_card_number}}</p>
+                    </th>
+                    <th style="width: 150px;position: relative ;left: 40px; font-family: 黑体" >
+                        <p>{{item.dpt_date}}</p>
+                    </th>
+                    <br>
+                    <th style="width: 70px;position: relative ;left: 40px; font-family: 黑体" >
+                        <p>{{item.dpt_time}}</p>
+                    </th>
+                    <th style="width: 70px;position: relative ;left: 40px; font-family: 黑体" >
+                        <p>{{item.arr_time}}</p>
+                    </th>
+                    <th style="width: 70px;position: relative ;left: 40px; font-family: 黑体" >
+                        <p>{{item.train_no}}</p>
+                    </th>
+                    <th style="width: 70px;position: relative ;left: 40px; font-family: 黑体" >
+                        <p>{{item.seat_type}}</p>
+                    </th>
+                    <th style="width: 70px;position: relative ;left: 40px; font-family: 黑体" >
+                        <p>{{item.seat_info}}</p>
+                    </th>
+                    <th style="width: 100px;position: relative ;left: 40px; font-family: 黑体" >
+                        <p>{{item.price}}</p>
+                    </th>
+                    <th style="width: 70px;position: relative ;left: 40px; font-family: 黑体" >
+                        <p>{{item.state}}</p>
+                    </th>
+                    <th>
+                        <a href="refund.html">
+                        <p>
+                            <input type="button" value="删除" style="width: 70px;position: relative ;left: 60px;
+                            font-family: '方正柳公权楷书 简'">
+                        </p>
+                        </a>
+                    </th>
+                    
+                </table>
+            </div>
+
+            
+
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="../js/UserOrderQuery.js">
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="databaseProject.demo.mapper.TicketMapper">
+
+<!--    <cache/>-->
+
+    <select id="buyATicket" resultType="java.lang.String">
+        set role guest;
+        select buy_ticket(
+        #{train_num}, #{depart_station_index}, #{arr_station_index}, #{dpt_date},
+        #{seat_type}, #{user_name}, #{id_card_num}, #{phone_number});
+    </select>
+
+    <select id="queryTicketById" resultType="databaseProject.demo.pojo.Ticket" useCache="false">
+        set role guest;
+        select * from query_tickets_by_id(#{user_card_id})
+    </select>
+
+    <select id="refundTicketById" resultType="java.lang.String">
+        set role guest;
+        select * from refund_ticket(#{refund_ticket_id})
+    </select>
+
+
+</mapper>

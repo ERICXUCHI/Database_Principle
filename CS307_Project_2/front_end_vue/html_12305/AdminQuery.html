@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--arrbuy = query-->
+<head>
+    <meta charset="UTF-8">
+    <title>管理员车票查询</title>
+    <link href="../images/icon.ico" rel="icon" type="image/x-icon"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link href="../images/icon.ico" rel="icon" type="image/x-icon"/>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../library/citySelect/css/city-select.css">
+
+    <script src="../library/laydate/laydate.js"></script>
+
+    <style>
+        body{
+            background-image:url("../images/BGG.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+
+    </style>
+</head>
+<style>
+    .navigation_bar{
+        background: orange;
+    }
+
+    .navigation_text{
+        font-size: 20px;
+    }
+
+</style>
+
+<body>
+
+<a href="Login.html">
+    <img style="max-height:106px;overflow:hidden;" src="../images/logo.jpg" alt="">
+</a>
+<div id="app">
+    <ul class="nav nav-pills nav-justified">
+        <li class="active">
+            <a class="navigation_text" href="AdminQuery.html" style="color: white;font-family: '方正字迹-龙吟体 简'">车票查询</a>
+        </li>
+        <li class="navigation_bar">
+            <a class="navigation_text" href="AdminTrainQuery.html" style="color: white;font-family: '方正字迹-龙吟体 简'">车次查询</a>
+        </li>
+        <li class="navigation_bar">
+            <a class="navigation_text" href="AdminOrderManage.html" style="color: white;font-family: '方正字迹-龙吟体 简'">订单管理</a>
+        </li>
+        <li class="navigation_bar">
+            <a class="navigation_text" href="AdminDataManage.html" style="color: white;font-family: '方正字迹-龙吟体 简'">增删管理</a>
+        </li>
+    </ul>
+    <div style="height: 20px"></div>
+    <div style="font-family: '方正字迹-龙吟体 简';font-size: 20px">
+        请输入需要查询的信息，依次为：出发地车站，目的地车站，出发日期（如2020-12-22）
+    </div>
+    <div style="height: 20px"></div>
+
+    <span style="font-family: '方正柳公权楷书 简';font-size: 30px">起始站</span>
+    <input type="text" style="font-size: 24px" v-model="inputValue1" @keypress.enter="add1">
+    <span style="font-family: '方正柳公权楷书 简';font-size: 30px">目的站</span>
+    <input type="text" style="font-size: 24px" v-model="inputValue2" @keypress.enter="add2">
+    <!--        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+    <span style="font-family: '方正柳公权楷书 简';font-size: 30px"> 日期</span>
+    <input type="text" style="font-size: 24px" id="test1"  v-model="inputValue3" @keypress.enter="add3">
+    <input type="button"  style="font-family: '方正柳公权楷书 简';font-size: 30px" value="查 票" @click="getMes">
+    <input type="button" style="font-family: '方正柳公权楷书 简';font-size: 30px" value="清 空" @click="clear">
+
+    <div style="height: 10px">
+    </div>
+    <div class="hotkey" style="font-family: 楷体;font-size: 20px">
+        <a href="javascript:;" @click="addstation('北京西')">北京西</a>
+        <a href="javascript:;" @click="addstation('上海虹桥')">上海虹桥</a>
+        <a href="javascript:;" @click="addstation('广州南')">广州南</a>
+        <a href="javascript:;" @click="addstation('深圳北')">深圳北</a>
+    </div>
+    <div style="height: 10px"></div>
+    <div style="font-family: '方正柳公权楷书 简';font-size: 30px">
+
+        <span v-for="item in arrQuery">{{item}}&#160;&#160;&#160;&#160;</span>
+
+    </div>
+    <div style="height: 5px"></div>
+    <div style="height: 2px;background:#CCCCCC"></div>
+
+    <div style="height: 50px;width:2000px;background: white;display: table-cell;vertical-align: middle;font-size: 20px;">
+        <table>
+            <th style="width: 95px;position: relative ;left: 30px; font-family: 楷体" >
+                <p>车次号</p>
+            </th>
+            <th style="width: 130px;text-align: center; font-family: 楷体">
+                <p>出发时间</p>
+            </th>
+            <th style="width: 120px;text-align: center; font-family: 楷体">
+                <p>运行时间</p>
+            </th>
+            <th style="width: 100px;text-align: center; font-family: 楷体">
+                <p>到达时间</p>
+            </th>
+            <th style="width: 100px;text-align: center; font-family: 楷体">
+                <p>一等票价</p>
+            </th>
+            <th style="width: 100px;text-align: center; font-family: 楷体">
+                <p>一等余票</p>
+            </th>
+            <th style="width: 100px;text-align: center; font-family: 楷体">
+                <p>二等票价</p>
+            </th>
+            <th style="width: 100px;text-align: center; font-family: 楷体">
+                <p>二等余票</p>
+            </th>
+            <th style="width: 120px;text-align: center; font-family: 楷体">
+                <p>出发站序号</p>
+            </th>
+            <th style="width: 120px;text-align: center; font-family: 楷体">
+                <p>目的站序号</p>
+            </th>
+
+        </table>
+    </div>
+
+
+    <div v-for="item in arrRes">
+        <div style="height: 50px;width:2000px;background: white;display: table-cell;vertical-align: middle;font-size: 20px;">
+
+            <table>
+                <th style="width: 95px;position: relative ;left: 40px; font-family: 黑体" >
+                    <p>{{item.train_num}}</p>
+                </th>
+                <th style="width: 130px;text-align: center; font-family: 黑体">
+                    <p>{{item.dpt_origin_time}}</p>
+                </th>
+                <th style="width: 120px;text-align: center; font-family: 黑体">
+                    <p>{{item.execution_time}}</p>
+                </th>
+                <th style="width: 100px;text-align: center; font-family: 黑体">
+                    <p>{{item.arr_destination_time}}</p>
+                </th>
+                <th style="width: 100px;text-align: center; font-family: 黑体">
+                    <p>{{item.first_price}}</p>
+                </th>
+                <th style="width: 100px;text-align: center; font-family: 黑体">
+                    <p>{{item.min_first_remain}}</p>
+                </th>
+                <th style="width: 100px;text-align: center; font-family: 楷体">
+                    <p>{{item.second_price}}</p>
+                </th>
+                <th style="width: 100px;text-align: center; font-family: 楷体">
+                    <p>{{item.min_second_remain}}</p>
+                </th>
+                <th style="width: 100px;text-align: center; font-family: 楷体">
+                    <p>{{item.dpt_station_index}}</p>
+                </th>
+                <th style="width: 120px;text-align: center; font-family: 楷体">
+                    <p>{{item.arr_station_index}}</p>
+                </th>
+                <th>
+                    <p>
+                        <a href="UserTrainQuery.html">
+                            <input type="button" style="font-family: '方正字迹-龙吟体 简'" value="详情" >
+                        </a>
+                    </p>
+                </th>
+                <th>
+                    <p>
+                        <a href="UserBuy.html">
+                            <input type="button" style="font-family: '方正字迹-龙吟体 简'" value="购票" >
+                        </a>
+                    </p>
+                </th>
+
+
+
+            </table>
+        </div>
+
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="../js/UserQuery.js">
+</script>
+</body>
+</html>

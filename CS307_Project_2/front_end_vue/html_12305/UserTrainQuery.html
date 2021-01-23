@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--arrbuy = query-->
+<head>
+    <meta charset="UTF-8">
+    <title>车次查询</title>
+    <link href="../images/icon.ico" rel="icon" type="image/x-icon"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link href="../images/icon.ico" rel="icon" type="image/x-icon"/>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../library/citySelect/css/city-select.css">
+
+    <script src="../library/laydate/laydate.js"></script>
+
+    <style>
+        body{
+            background-image:url("../images/BGG.jpg");
+            background-size: cover;
+        }
+
+
+    </style>
+</head>
+<style>
+    .navigation_bar{
+        background: orange;
+    }
+
+    .navigation_text{
+        font-size: 20px;
+    }
+
+</style>
+<body>
+
+<a href="Login.html">
+    <img style="max-height:106px;overflow:hidden;" src="../images/logo.jpg" alt="">
+</a>
+
+    <div id="app">
+        <ul class="nav nav-pills nav-justified">
+            <li class="navigation_bar">
+                <a class="navigation_text" href="UserQuery.html" style="color: white;font-family: '方正字迹-龙吟体 简'">车票查询</a>
+            </li>
+            <li class="active">
+                <a class="navigation_text" href="UserTrainQuery.html" style="color: white;font-family: '方正字迹-龙吟体 简'">车次查询</a>
+            </li>
+            <li class="navigation_bar">
+                <a class="navigation_text" href="UserBuy.html" style="color: white;font-family: '方正字迹-龙吟体 简'">购票服务</a>
+            </li>
+            <li class="navigation_bar">
+                <a class="navigation_text" href="UserOrderQuery.html" style="color: white;font-family: '方正字迹-龙吟体 简'">订单查询</a>
+            </li>
+        </ul>
+        <div style="height: 20px"></div>
+        <div style="font-family: '方正字迹-龙吟体 简';font-size: 20px">
+        请输入需要查询的车次号和日期，例如：D1，2020-12-30
+        </div>
+        <div style="height: 20px">
+        </div>
+        <span style="font-family: '方正柳公权楷书 简';font-size: 30px">车次</span>&nbsp;&nbsp;
+        <input type="text" style="font-size: 24px" v-model="inputValue1" @keypress.enter="add1">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span style="font-family: '方正柳公权楷书 简';font-size: 30px">日期</span>&nbsp;&nbsp;
+        <input type="text" style="font-size: 24px" id="test1"  v-model="inputValue2" @keypress.enter="add2">
+        &nbsp;&nbsp;
+        <input type="button"  style="font-family: '方正柳公权楷书 简';font-size: 30px" value="查 票" @click="getMes">
+        &nbsp;&nbsp;
+        <input type="button" style="font-family: '方正柳公权楷书 简';font-size: 30px" value="清 空" @click="clear">
+
+        <div style="font-family: '方正柳公权楷书 简';font-size: 30px">
+
+            <span v-for="item in arrQuery">{{item}}&#160;&#160;&#160;&#160;</span>
+
+        </div>
+
+        <div style="height: 10px"></div>
+        <div style="height: 2px;background:#CCCCCC"></div>
+
+        <div style="height: 50px;width:2000px;background: white;display: table-cell;vertical-align: middle;font-size: 20px;">
+            <table>
+                <th style="width: 180px;text-align: center; font-family: 楷体">
+                    <p>车站序号</p>
+                </th>
+                <th style="width: 180px;text-align: center; font-family: 楷体">
+                    <p>车站名称</p>
+                </th>
+                <th style="width: 180px;text-align: center; font-family: 楷体">
+                    <p>到达时间</p>
+                </th>
+                <th style="width: 180px;text-align: center; font-family: 楷体">
+                    <p>出发时间</p>
+                </th>
+                <th style="width: 180px;text-align: center; font-family: 楷体">
+                    <p>停留时间</p>
+                </th>
+                <th style="width: 180px;text-align: center; font-family: 楷体">
+                    <p>一等余票</p>
+                </th>
+                <th style="width: 160px;text-align: center; font-family: 楷体">
+                    <p>二等余票</p>
+                </th>
+                <th style="width: 160px;text-align: center; font-family: 楷体">
+                    <p>里程数</p>
+                </th>
+
+            </table>
+        </div>
+
+
+        <ul v-for="item in arrRes">
+            <div style="height: 50px;width:2000px;background: white;display: table-cell;vertical-align: middle;font-size: 20px;">
+                <table>
+                    <th style="width: 150px;position: relative ;left: 65px; font-family: 黑体" >
+                        <p>{{item.station_index}}</p>
+                    </th>
+                    <th style="width: 200px;text-align: center; font-family: 黑体">
+                        <p>{{item.station_name}}</p>
+                    </th>
+                    <th style="width: 180px;text-align: center; font-family: 黑体">
+                        <p>{{item.arr_time}}</p>
+                    </th>
+                    <th style="width: 180px;text-align: center; font-family: 黑体">
+                        <p>{{item.depart_time}}</p>
+                    </th>
+                    <th style="width: 180px;text-align: center; font-family: 黑体">
+                        <p>{{item.time_diff}}</p>
+                    </th>
+                    <th style="width: 180px;text-align: center; font-family: 黑体">
+                        <p>{{item.first_remain}}</p>
+                    </th>
+                    <th style="width: 160px;text-align: center; font-family: 黑体">
+                        <p>{{item.second_remain}}</p>
+                    </th>
+                    <th style="width: 160px;text-align: center; font-family: 黑体">
+                        <p>{{item.interval_km}}</p>
+                </table>
+            </div>
+
+
+        </ul>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="../js/UserTrainQuery.js">
+</script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--arrbuy = query-->
+<head>
+    <meta charset="UTF-8">
+    <title>管理员数据管理</title>
+    <link href="../images/icon.ico" rel="icon" type="image/x-icon"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link href="../images/icon.ico" rel="icon" type="image/x-icon"/>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../library/citySelect/css/city-select.css">
+
+    <script src="../library/laydate/laydate.js"></script>
+
+    <style>
+        body{
+            background-image:url("../images/BGG.jpg");
+            background-size: cover;
+        }
+
+
+    </style>
+</head>
+<style>
+    .navigation_bar {
+        background: orange;
+    }
+
+    .navigation_text {
+        font-size: 20px;
+    }
+
+</style>
+<body>
+
+<a href="Login.html">
+    <img style="max-height:105px;overflow:hidden;" src="../images/logo.jpg" alt="">
+</a>
+
+<div id="app">
+    <ul class="nav nav-pills nav-justified">
+        <li class="navigation_bar">
+            <a class="navigation_text" href="AdminQuery.html" style="color: white;font-family: '方正字迹-龙吟体 简'">车票查询</a>
+        </li>
+        <li class="navigation_bar">
+            <a class="navigation_text" href="AdminTrainQuery.html" style="color: white;font-family: '方正字迹-龙吟体 简'">车次查询</a>
+        </li>
+        <li class="navigation_bar">
+            <a class="navigation_text" href="AdminOrderManage.html" style="color: white;font-family: '方正字迹-龙吟体 简'">订单管理</a>
+        </li>
+        <li class="active">
+            <a class="navigation_text" href="AdminDataManage.html" style="color: white;font-family: '方正字迹-龙吟体 简'">增删管理</a>
+        </li>
+    </ul>
+
+    <div style="height: 20px">
+    </div>
+
+    <div id="section-1" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="font-size: 35px; font-family: '方正柳公权楷书 简';">增加车站</h3>
+        </div>
+        <div class="panel-body">
+            <table>
+                <th>
+                    <div class="input-group input-group-lg" style="width: 370px">
+                        <span class="input-group-addon" style="font-family: '方正柳公权楷书 简'">车站名</span>
+                        <input type="text" style="font-size: 30px" v-model="addstation" @keypress.enter="addStation1">
+
+                    </div>
+                </th>
+                <th>
+                    <div style="transform: translateX(150%)">
+                        <input type="button" style="font-family: '方正柳公权楷书 简';font-size: 30px" value="添 加"
+                        @click="addingstation">
+                    </div>
+                </th>
+            </table>
+        </div>
+    </div>
+
+<!--    <span v-for="item in addStation">-->
+<!--        {{item}}-->
+<!--    </span>-->
+
+
+    <div id="section-2" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="font-size: 35px;font-family: '方正柳公权楷书 简'">删除车站</h3>
+        </div>
+        <div class="panel-body">
+            <table>
+                <th>
+                    <div class="input-group input-group-lg" style="width: 370px">
+                        <span class="input-group-addon"style="font-family: '方正柳公权楷书 简'">车站名</span>
+                        <input type="text" style="font-size: 30px" v-model="delstation" @keypress.enter="delStation1">
+                    </div>
+                </th>
+                <th>
+                    <div style="transform: translateX(150%)">
+                        <input type="button" style="font-family: '方正柳公权楷书 简';font-size: 30px" value="删 除"
+                        @click="deletingstation">
+                    </div>
+                </th>
+            </table>
+        </div>
+    </div>
+
+<!--    <span v-for="item in delStation">-->
+<!--        {{item}}-->
+<!--    </span>-->
+
+    <div id="section-3" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="font-size: 35px;font-family: '方正柳公权楷书 简'">增加车次</h3>
+        </div>
+        <div class="panel-body">
+            <table>
+                <tr>
+                    <div class="input-group input-group-lg" style="width: 370px">
+                        <span class="input-group-addon"style="font-family: '方正柳公权楷书 简'" >车次编号</span>
+                        <input type="text" placeholder="例如：G123" style="font-size: 30px" v-model="addtrain[0]" @keypress.enter="addTrain1(0)">
+                    </div>
+                </tr>
+                <tr style="height: 20px"></tr>
+                <tr>
+                    <th>
+                        <div class="input-group input-group-lg" style="width: 370px">
+                            <span class="input-group-addon"style="font-family: '方正柳公权楷书 简'">出发日期</span>
+                            <input type="text" placeholder="2020-12-30" style="font-size: 30px" id="test1" v-model="addtrain[1]" @keypress.enter="addTrain1(1)">
+                        </div>
+                    </th>
+                </tr>
+                <tr style="height: 20px"></tr>
+                <tr>
+                    <th>
+                        <div class="input-group input-group-lg" style="width: 370px">
+                            <span class="input-group-addon"style="font-family: '方正柳公权楷书 简'">添加车站</span>
+                            <input type="text" placeholder="例如：NKD" style="font-size: 30px" v-model="addtrain[2]" @keypress.enter="addTrain1(2)">
+                        </div>
+                    </th>
+                </tr>
+                <tr style="height: 20px"></tr>
+                <tr>
+                    <th>
+                        <div class="input-group input-group-lg" style="width: 370px">
+                            <span class="input-group-addon"style="font-family: '方正柳公权楷书 简'">出发时间</span>
+                            <input type="text" placeholder="例如：12:00" style="font-size: 30px" v-model="addtrain[3]" @keypress.enter="addTrain1(3)">
+                        </div>
+                    </th>
+                </tr>
+                <tr style="height: 20px"></tr>
+                <tr>
+                    <th>
+                        <div class="input-group input-group-lg" style="width: 370px">
+                            <span class="input-group-addon"style="font-family: '方正柳公权楷书 简'">到达时间</span>
+                            <input type="text" placeholder="例如：15:00" style="font-size: 30px" v-model="addtrain[4]" @keypress.enter="addTrain1(4)">
+                        </div>
+                    </th>
+                </tr>
+                <tr style="height: 20px"></tr>
+                <tr>
+                    <th>
+                        <div class="input-group input-group-lg" style="width: 370px">
+                            <span class="input-group-addon"style="font-family: '方正柳公权楷书 简'">行驶天数</span>
+                            <input type="text" placeholder="例如：1" style="font-size: 30px" v-model="addtrain[5]" @keypress.enter="addTrain1(5)">
+                        </div>
+                    </th>
+                </tr>
+                <tr style="height: 20px"></tr>
+                <tr>
+                    <th>
+                        <div class="input-group input-group-lg" style="width: 370px">
+                            <span class="input-group-addon"style="font-family: '方正柳公权楷书 简'">检票入口</span>
+                            <input type="text" placeholder="例如：S8" style="font-size: 30px" v-model="addtrain[6]" @keypress.enter="addTrain1(6)">
+                        </div>
+                    </th>
+                </tr>
+                <tr style="height: 20px"></tr>
+                <tr>
+                    <th>
+                        <div class="input-group input-group-lg" style="width: 370px">
+                            <span class="input-group-addon"style="font-family: '方正柳公权楷书 简'">行驶里程</span>
+                            <input type="text" placeholder="例如：100" style="font-size: 30px" v-model="addtrain[7]" @keypress.enter="addTrain1(7)">
+                        </div>
+                    </th>
+                </tr>
+                <tr style="height: 20px"></tr>
+                <tr>
+                    <th>
+                        <div class="input-group input-group-lg" style="width: 370px">
+                            <span class="input-group-addon"style="font-family: '方正柳公权楷书 简'">一等票价</span>
+                            <input type="text" placeholder="例如：199" style="font-size: 30px" v-model="addtrain[8]" @keypress.enter="addTrain1(8)">
+                        </div>
+                    </th>
+                </tr>
+                <tr style="height: 20px"></tr>
+                <tr>
+                    <th>
+                        <div class="input-group input-group-lg" style="width: 370px">
+                            <span class="input-group-addon"style="font-family: '方正柳公权楷书 简'">二等票价</span>
+                            <input type="text" placeholder="例如：100" style="font-size: 30px" v-model="addtrain[9]" @keypress.enter="addTrain1(9)">
+                        </div>
+                    </th>
+                </tr>
+                <tr style="height: 20px"></tr>
+                <tr>
+                    <th>
+                        <div class="input-group input-group-lg" style="width: 370px">
+                            <span class="input-group-addon"style="font-family: '方正柳公权楷书 简'">一等余票</span>
+                            <input type="text" placeholder="例如：99" style="font-size: 30px" v-model="addtrain[10]" @keypress.enter="addTrain1(10)">
+                        </div>
+                    </th>
+                </tr>
+                <tr style="height: 20px"></tr>
+                <tr>
+                    <th>
+                        <div class="input-group input-group-lg" style="width: 370px">
+                            <span class="input-group-addon"style="font-family: '方正柳公权楷书 简'">二等余票</span>
+                            <input type="text" placeholder="例如：300" style="font-size: 30px" v-model="addtrain[11]" @keypress.enter="addTrain1(11)">
+                        </div>
+                    </th>
+                    <th>
+                        <div style="transform: translateX(150%)">
+                            <input type="button" style="font-family: '方正柳公权楷书 简';font-size: 30px" value="添 加"
+                            @click="addingtrain">
+                        </div>
+                    </th>
+                </tr>
+            </table>
+        </div>
+    </div>
+<!--    <span v-for="item in addTrain">-->
+<!--        {{item}}-->
+<!--    </span>-->
+
+
+    <div id="section-4" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="font-size: 35px;font-family: '方正柳公权楷书 简'">删除车次</h3>
+        </div>
+        <div class="panel-body">
+            <table>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon"style="font-family: '方正柳公权楷书 简'">车次编号</span>
+                    <input type="text" placeholder="例如：G123" style="font-size: 30px" v-model="deltrain[0]" @keypress.enter="delTrain1(0)">
+                </div>
+                <tr style="height: 20px"></tr>
+                <tr>
+                    <th>
+                        <div class="input-group input-group-lg" style="width: 370px">
+                            <span class="input-group-addon"style="font-family: '方正柳公权楷书 简'">出发日期</span>
+                            <input type="text" placeholder="例如：2020-12-30" style="font-size: 30px" id="test2" v-model="deltrain[1]" @keypress.enter="delTrain1(1)">
+                        </div>
+                    </th>
+                    <th>
+                        <div style="transform: translateX(150%)">
+                            <input type="button" style="font-family: '方正柳公权楷书 简';font-size: 30px" value="删 除"
+                            @click="deletingtrain">
+                        </div>
+                    </th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+<!--    <span v-for="item in deltrain">-->
+<!--        {{item}}-->
+<!--    </span>-->
+
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="../js/AdminDataManage.js">
+</script>
+</body>
+</html>

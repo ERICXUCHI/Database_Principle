@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+    <link href="../images/icon.ico" rel="icon" type="image/x-icon"/>
+    <link href="../css/style.css" rel='stylesheet' type='text/css' />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body{
+            background-image:url("../images/BG2.jpg");
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <div class="login-form">
+        <h1>Login</h1>
+        <div class="head">
+
+            <style type="text/css">
+                img{
+                    position:relative;
+                    left:-20px;
+                    top:-10px;
+                    width: 160px;
+                    height: 160px;
+                }
+            </style>
+            <img src="../images/users_icon.png" alt=""/>
+        </div>
+        <form>
+            <script>
+            </script>
+            <span style="font-family: '方正柳公权楷书 简';font-size: 30px">用户名</span>
+            <div style="height: 10px"></div>
+            <input type='text' style="font-size: 34px;font-family: '方正柳公权楷书 简'">
+            <div style="height: 10px"></div>
+            <span style="font-family: '方正柳公权楷书 简';font-size: 30px">密码</span>
+            <div style="height: 10px"></div>
+            <input type='text' style="font-size: 34px;font-family: '方正柳公权楷书 简'">
+            <div style="height: 10px"></div>
+            <div id="app">
+                <a href="UserQuery.html">
+                    <input type="button" value="Register" @click="clicking">
+                </a>
+            </div>
+        </form>
+    </div>
+
+</div>
+</body>
+
+<script>
+
+    var app = new Vue({
+        el:"#app",
+        methods:{
+            clicking:function () {
+                alert("注册成功！")
+            }
+
+        }
+    })
+
+</script>
+</html>

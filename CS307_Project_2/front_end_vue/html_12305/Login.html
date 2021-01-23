@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login</title>
+	<meta charset="utf-8">
+	<link href="../images/icon.ico" rel="icon" type="image/x-icon"/>
+	<link href="../css/style.css" rel='stylesheet' type='text/css' />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		body{
+			background-image:url("../images/BG2.jpg");
+			background-size: cover;
+		}
+	</style>
+</head>
+<body>
+	 <!-----start-main---->
+	 <div class="main">
+		<div class="login-form">
+			<h1>Login</h1>
+			<div class="head">
+
+				<style type="text/css">
+				img{
+					position:relative;
+					left:-20px;
+					top:-10px;
+					width: 160px;
+					height: 160px;
+				}
+				</style>
+
+				<img src="../images/users_icon.png" alt=""/>
+			</div>
+			<form>
+				<script>
+					let people;
+
+					function change() {
+						if(people=='USER'){
+							window.location.href='Register.html'
+						}else{
+							window.location.href='AdminQuery.html'
+						}
+					}
+				</script>
+				<input type='user' id="USER" value="USER" onclick="people='USER'" readonly/>
+				<input type="administrator" id="ADMINISTRATOR" value="ADMINISTRATOR" onclick="people='ADMINISTRATOR'"readonly/>
+				<input type="button" onclick="change()" value="LOGIN">
+			</form>
+		</div>
+		 <div>
+
+
+			 <p align="center" style="color:white;font-size:25px">小组成员：罗云浩 徐驰 匡浩玮</p>
+		 </div>
+	 </div>
+			 <!-----//end-main---->
+
+<!--<div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>-->
+</body>
+</html>

@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: Database_Project_2
+  datasource:
+    name: localhost
+    username: checker
+    password: 123456
+    url: jdbc:postgresql://localhost:5432/train?useSSL=false&requireSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    driver-class-name: org.postgresql.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+#    hikari:
+#      minimum-idle: 5
+#      idle-timeout: 600000
+#      maximum-pool-size: 10
+#      auto-commit: true
+#      pool-name: MyHikariCP
+#      max-lifetime: 1800000
+#      connection-timeout: 30000
+#      connection-test-query: SELECT 1
+
+  mvc:
+    static-path-pattern: classpath:/static/**
+
+  resources:
+    static-locations: classpath:/static/
+    add-mappings: true
+
+  thymeleaf:
+    cache: false
+#    suffix: .html
+    encoding: UTF-8
+    prefix: classpath:/templates/
+
+# secure cookies
+server:
+  port: 2727
+
+mybatis:
+  type-aliases-package: databaseProject.demo.pojo
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
+
+
+
